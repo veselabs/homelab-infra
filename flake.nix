@@ -15,6 +15,7 @@
       perSystem = {
         pkgs,
         self',
+        system,
         ...
       }: let
         treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs {
@@ -22,6 +23,8 @@
 
           programs = {
             alejandra.enable = true;
+            packer.enable = true;
+            shfmt.enable = true;
           };
         };
       in {
@@ -30,17 +33,32 @@
 
           modules = [
             {
-              languages = {
-                nix.enable = true;
+              env = {
+                PROXMOX_URL = "op://veselabs/proxmox root pam/url";
+                PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
+                PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
               };
 
-              packages = [
-                self'.formatter
-              ];
+              languages = {
+                nix.enable = true;
+                shell.enable = true;
+              };
+
+              packages =
+                [
+                  self'.formatter
+                ]
+                ++ builtins.attrValues {
+                  inherit
+                    (pkgs)
+                    packer
+                    ;
+                };
 
               git-hooks.hooks = {
                 deadnix.enable = true;
                 end-of-file-fixer.enable = true;
+                shellcheck.enable = true;
                 statix.enable = true;
                 treefmt.enable = true;
                 treefmt.package = self'.formatter;
@@ -57,6 +75,11 @@
 
         formatter = treefmtEval.config.build.wrapper;
         checks.formatting = treefmtEval.config.build.check self;
+
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
       };
     });
 }
