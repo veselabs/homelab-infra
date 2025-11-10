@@ -24,7 +24,10 @@
           programs = {
             alejandra.enable = true;
             packer.enable = true;
+            prettier.enable = true;
             shfmt.enable = true;
+            terraform.enable = true;
+            terraform.package = pkgs.terraform;
           };
         };
       in {
@@ -34,14 +37,20 @@
           modules = [
             {
               env = {
+                AWS_ACCESS_KEY_ID = "op://veselabs/AWS Root Access Key/username";
+                AWS_SECRET_ACCESS_KEY = "op://veselabs/AWS Root Access Key/credential";
+                PM_API_URL = "op://veselabs/proxmox root pam/url";
+                PM_PASS = "op://veselabs/proxmox root pam/password";
+                PM_USER = "op://veselabs/proxmox root pam/username";
+                PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
                 PROXMOX_URL = "op://veselabs/proxmox root pam/url";
                 PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
-                PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
               };
 
               languages = {
                 nix.enable = true;
                 shell.enable = true;
+                terraform.enable = true;
               };
 
               packages =
@@ -51,7 +60,10 @@
                 ++ builtins.attrValues {
                   inherit
                     (pkgs)
+                    awscli2
+                    just
                     packer
+                    terraform-docs
                     ;
                 };
 
@@ -60,6 +72,13 @@
                 end-of-file-fixer.enable = true;
                 shellcheck.enable = true;
                 statix.enable = true;
+                terraform-docs = {
+                  enable = true;
+                  entry = "just check-docs";
+                  files = "\\.tf$";
+                  pass_filenames = false;
+                };
+                tflint.enable = true;
                 treefmt.enable = true;
                 treefmt.package = self'.formatter;
                 trim-trailing-whitespace.enable = true;
