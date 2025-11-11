@@ -1,0 +1,76 @@
+---
+- name: Set up Tailscale
+  hosts: pve
+  become: true
+
+  vars:
+    auth_key: "{{ lookup('ansible.builtin.env', 'TAILSCALE_AUTH_KEY') }}"
+
+  tasks:
+    - name: Enable IP forwarding
+      block:
+        - name: Write kernel parameters
+          ansible.builtin.copy:
+            content: |
+              net.ipv4.ip_forward=1
+              net.ipv6.conf.all.forwarding=1
+            dest: /etc/sysctl.d/99-tailscale.conf
+            mode: "0644"
+
+        - name: Load kernel parameters
+          ansible.builtin.command: sysctl -p /etc/sysctl.d/99-tailscale.conf
+          changed_when: true
+
+    # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+    - name: Configure UDP GRO forwarding
+      block:
+        - name: Install networkd-dispatcher
+          ansible.builtin.apt:
+            name: networkd-dispatcher
+            state: present
+
+        - name: Enable networkd-dispatcher
+          ansible.builtin.systemd:
+            name: networkd-dispatcher
+            enabled: true
+
+        - name: Persist UDP GRO forwarding configuration
+          ansible.builtin.shell:
+            creates: /etc/networkd-dispatcher/routable.d/50-tailscale
+            cmd: |
+              set -euxo pipefail
+              printf '#!/bin/sh\n\nethtool -K %s rx-udp-gro-forwarding on rx-gro-list off \n' \
+                "$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")" \
+                | tee /etc/networkd-dispatcher/routable.d/50-tailscale
+              chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
+              /etc/networkd-dispatcher/routable.d/50-tailscale
+
+    - name: Install Tailscale
+      block:
+        - name: Add apt key
+          ansible.builtin.get_url:
+            url: https://pkgs.tailscale.com/stable/debian/trixie.noarmor.gpg
+            dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+            mode: "0644"
+
+        - name: Add apt repository
+          ansible.builtin.get_url:
+            url: https://pkgs.tailscale.com/stable/debian/trixie.tailscale-keyring.list
+            dest: /etc/apt/sources.list.d/tailscale.list
+            mode: "0644"
+
+        - name: Install apt package
+          ansible.builtin.apt:
+            name: tailscale
+            update_cache: true
+            state: present
+
+    - name: Start Tailscale
+      changed_when: true
+      ansible.builtin.shell: |
+        set -euxo pipefail
+        tailscale up \
+          --auth-key {{ auth_key | quote }} \
+          --advertise-exit-node=true \
+          --advertise-routes 10.42.1.0/24 \
+          --ssh=true

@@ -45,9 +45,11 @@
                 PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
                 PROXMOX_URL = "op://veselabs/proxmox root pam/url";
                 PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
+                TAILSCALE_AUTH_KEY = "op://veselabs/tailscale auth key/credential";
               };
 
               languages = {
+                ansible.enable = true;
                 nix.enable = true;
                 shell.enable = true;
                 terraform.enable = true;
@@ -68,6 +70,7 @@
                 };
 
               git-hooks.hooks = {
+                ansible-lint.enable = true;
                 deadnix.enable = true;
                 end-of-file-fixer.enable = true;
                 shellcheck.enable = true;
