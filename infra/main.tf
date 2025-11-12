@@ -1,13 +1,3 @@
-provider "proxmox" {
-  pm_tls_insecure = true
-}
-
-locals {
-  sshkeys = <<-EOF
-    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBKvLCEwUG+hT5G0PFIHLPJK/rM8EiPngEkAkvLmo22
-  EOF
-}
-
 resource "proxmox_vm_qemu" "jumphost" {
   count       = 0
   clone_id    = 9001
