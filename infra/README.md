@@ -6,6 +6,7 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.12 |
 | <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 3.0.2-rc05 |
+| <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) | 0.24.0 |
 
 ## Providers
 

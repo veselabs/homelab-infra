@@ -6,5 +6,10 @@ terraform {
       source  = "Telmate/proxmox"
       version = "3.0.2-rc05"
     }
+
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = "0.24.0"
+    }
   }
 }
