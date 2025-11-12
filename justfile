@@ -3,15 +3,15 @@ default:
     @just --list
 
 # Execute `terraform`
-[group('infrastructure')]
-[working-directory('infrastructure')]
+[group('infra')]
+[working-directory('infra')]
 [positional-arguments]
 terraform *args:
     terraform "$@"
 
 # Check the Terraform docs
-[group('infrastructure')]
-[working-directory('infrastructure')]
+[group('infra')]
+[working-directory('infra')]
 check-docs:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -22,8 +22,8 @@ check-docs:
         --output-check
 
 # Generate the Terraform docs
-[group('infrastructure')]
-[working-directory('infrastructure')]
+[group('infra')]
+[working-directory('infra')]
 generate-docs:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -33,7 +33,7 @@ generate-docs:
         --output-file=README.md
 
 # Lock the Terraform providers
-[working-directory('infrastructure')]
+[working-directory('infra')]
 lock-providers:
     #!/usr/bin/env bash
     set -euxo pipefail

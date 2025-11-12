@@ -1,5 +1,5 @@
 {
-  description = "homelab-infrastructure";
+  description = "homelab-infra";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
