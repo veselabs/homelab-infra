@@ -48,6 +48,8 @@
                 TAILSCALE_AUTH_KEY = "op://veselabs/tailscale auth key/credential";
                 TAILSCALE_OAUTH_CLIENT_ID = "op://veselabs/tailscale oauth credentials/username";
                 TAILSCALE_OAUTH_CLIENT_SECRET = "op://veselabs/tailscale oauth credentials/credential";
+                TF_VAR_op_service_account_token = "op://veselabs/service account auth token/credential";
+                TF_VAR_op_vault = "op://veselabs/service account auth token/username";
               };
 
               languages = {
