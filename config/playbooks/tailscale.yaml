@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    auth_key: "{{ lookup('ansible.builtin.env', 'TAILSCALE_AUTH_KEY') }}"
+    auth_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
 
   tasks:
     - name: Enable IP forwarding

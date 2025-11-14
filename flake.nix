@@ -45,7 +45,7 @@
                 PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
                 PROXMOX_URL = "op://veselabs/proxmox root pam/url";
                 PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
-                TAILSCALE_AUTH_KEY = "op://veselabs/tailscale auth key/credential";
+                PVE_TAILNET_KEY = "op://veselabs/homelab pve tailnet key/password";
                 TAILSCALE_OAUTH_CLIENT_ID = "op://veselabs/tailscale oauth credentials/username";
                 TAILSCALE_OAUTH_CLIENT_SECRET = "op://veselabs/tailscale oauth credentials/credential";
                 TF_VAR_op_service_account_token = "op://veselabs/service account auth token/credential";
