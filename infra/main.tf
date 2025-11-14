@@ -46,3 +46,19 @@ resource "proxmox_vm_qemu" "jumphost" {
   ciupgrade = true
   sshkeys   = local.sshkeys
 }
+
+resource "tailscale_tailnet_key" "pve" {
+  description         = "Homelab PVE"
+  tags                = ["tag:homelab-pve"]
+  reusable            = true
+  ephemeral           = false
+  preauthorized       = true
+  expiry              = 900
+  recreate_if_invalid = "never"
+}
+
+resource "onepassword_item" "pve_tailnet_key" {
+  vault    = var.op_vault
+  title    = "Homelab PVE Tailnet Key"
+  password = tailscale_tailnet_key.pve.key
+}
