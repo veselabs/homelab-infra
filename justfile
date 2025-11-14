@@ -2,13 +2,6 @@
 default:
     @just --list
 
-# Execute `terraform`
-[group('infra')]
-[working-directory('infra')]
-[positional-arguments]
-terraform *args:
-    terraform "$@"
-
 # Check the Terraform docs
 [group('infra')]
 [working-directory('infra')]
