@@ -23,27 +23,12 @@
 
     # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
     - name: Configure UDP GRO forwarding
-      block:
-        - name: Install networkd-dispatcher
-          ansible.builtin.apt:
-            name: networkd-dispatcher
-            state: present
-
-        - name: Enable networkd-dispatcher
-          ansible.builtin.systemd:
-            name: networkd-dispatcher
-            enabled: true
-
-        - name: Persist UDP GRO forwarding configuration
-          ansible.builtin.shell:
-            creates: /etc/networkd-dispatcher/routable.d/50-tailscale
-            cmd: |
-              set -euxo pipefail
-              printf '#!/bin/sh\n\nethtool -K %s rx-udp-gro-forwarding on rx-gro-list off \n' \
-                "$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")" \
-                | tee /etc/networkd-dispatcher/routable.d/50-tailscale
-              chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
-              /etc/networkd-dispatcher/routable.d/50-tailscale
+      ansible.builtin.copy:
+        content: |
+          iface vmbr0
+            post-up ethtool -K vmbr0 rx-udp-gro-forwarding on rx-gro-list off
+        dest: /etc/network/interfaces.d/udpgro
+        mode: "0644"
 
     - name: Install Tailscale
       block:
