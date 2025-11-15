@@ -19,7 +19,9 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_pve_node"></a> [pve\_node](#module\_pve\_node) | ./modules/pve-node | n/a |
 
 ## Resources
 

@@ -62,3 +62,17 @@ resource "onepassword_item" "pve_tailnet_key" {
   title    = "Homelab PVE Tailnet Key"
   password = tailscale_tailnet_key.pve.key
 }
+
+module "pve_node" {
+  source = "./modules/pve-node"
+
+  for_each = {
+    pve01 = {}
+    pve02 = {}
+    pve03 = {}
+    pve04 = {}
+    pve05 = {}
+  }
+
+  hostname = each.key
+}
