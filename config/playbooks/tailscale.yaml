@@ -58,7 +58,7 @@
           --auth-key {{ auth_key | quote }} \
           --advertise-exit-node=true \
           --advertise-routes 10.42.1.0/24 \
-          --ssh=true
+          --ssh=false
 
     - name: Serve PVE GUI
       changed_when: true
