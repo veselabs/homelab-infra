@@ -59,3 +59,10 @@
           --advertise-exit-node=true \
           --advertise-routes 10.42.1.0/24 \
           --ssh=true
+
+    - name: Serve PVE GUI
+      changed_when: true
+      ansible.builtin.shell: |
+        tailscale serve clear svc:pve
+        tailscale serve --service svc:pve --tcp 80 8006
+        tailscale serve --service svc:pve --tcp 443 8006
