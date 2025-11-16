@@ -39,6 +39,7 @@
               env = {
                 AWS_ACCESS_KEY_ID = "op://veselabs/AWS Root Access Key/username";
                 AWS_SECRET_ACCESS_KEY = "op://veselabs/AWS Root Access Key/credential";
+                CLOUDFLARE_API_TOKEN = "op://veselabs/cloudflare api token/credential";
                 PM_API_URL = "op://veselabs/proxmox root pam/url";
                 PM_PASS = "op://veselabs/proxmox root pam/password";
                 PM_USER = "op://veselabs/proxmox root pam/username";
@@ -48,6 +49,8 @@
                 PVE_TAILNET_KEY = "op://veselabs/homelab pve tailnet key/password";
                 TAILSCALE_OAUTH_CLIENT_ID = "op://veselabs/tailscale oauth credentials/username";
                 TAILSCALE_OAUTH_CLIENT_SECRET = "op://veselabs/tailscale oauth credentials/credential";
+                TF_VAR_cloudflare_account_id = "op://veselabs/cloudflare api token/account_id";
+                TF_VAR_cloudflare_zone_id = "op://veselabs/cloudflare api token/zone_id";
                 TF_VAR_op_service_account_token = "op://veselabs/service account auth token/credential";
                 TF_VAR_op_vault = "op://veselabs/service account auth token/username";
               };
