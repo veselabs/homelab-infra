@@ -76,3 +76,11 @@ module "pve_node" {
 
   hostname = each.key
 }
+
+resource "cloudflare_dns_record" "pve_homelab" {
+  zone_id = var.cloudflare_zone_id
+  name    = "pve.homelab"
+  type    = "CNAME"
+  content = "pve.tail2be24.ts.net"
+  ttl     = 1
+}
