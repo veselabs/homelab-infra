@@ -38,4 +38,8 @@ source "proxmox-clone" "base" {
 
 build {
   sources = ["source.proxmox-clone.base"]
+
+  provisioner "shell" {
+    inline = ["cloud-init clean --logs --machine-id --seed --config all"]
+  }
 }
