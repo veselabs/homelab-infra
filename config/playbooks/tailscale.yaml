@@ -2,10 +2,6 @@
 - name: Set up Tailscale
   hosts: pve
   become: true
-
-  vars:
-    auth_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
-
   tasks:
     - name: Enable IP forwarding
       block:
@@ -55,7 +51,7 @@
       ansible.builtin.shell: |
         set -euxo pipefail
         tailscale up \
-          --auth-key {{ auth_key | quote }} \
+          --auth-key {{ tailnet_key | quote }} \
           --advertise-exit-node=true \
           --advertise-routes 10.42.1.0/24 \
           --ssh=false

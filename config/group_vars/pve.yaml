@@ -1,0 +1,1 @@
+tailnet_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
