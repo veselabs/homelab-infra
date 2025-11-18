@@ -1,5 +1,5 @@
 ---
-- name: Set up Tailscale
+- name: Configure Tailscale
   hosts: pve
   become: true
   tasks:
