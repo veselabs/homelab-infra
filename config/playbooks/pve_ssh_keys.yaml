@@ -1,0 +1,10 @@
+---
+- name: Configure SSH keys
+  hosts: pve
+  become: true
+  tasks:
+    - name: Add authorized key
+      ansible.posix.authorized_key:
+        user: root
+        key: "{{ ssh_key }}"
+        state: present

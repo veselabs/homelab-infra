@@ -72,6 +72,7 @@
                     awscli2
                     just
                     packer
+                    sshpass
                     terraform-docs
                     ;
                 };
