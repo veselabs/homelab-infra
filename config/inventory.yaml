@@ -1,0 +1,12 @@
+pve:
+  hosts:
+    pve01:
+      ansible_user: root
+    pve02:
+      ansible_user: root
+    pve03:
+      ansible_user: root
+    pve04:
+      ansible_user: root
+    pve05:
+      ansible_user: root
