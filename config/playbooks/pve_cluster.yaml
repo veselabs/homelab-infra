@@ -1,0 +1,71 @@
+- name: Form cluster
+  hosts: pve
+  # Joining the cluster at once bricks it
+  serial: 1
+  tasks:
+    - name: Create cluster
+      delegate_to: localhost
+      run_once: true # noqa: run-once[task]
+      community.proxmox.proxmox_cluster:
+        state: present
+        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        cluster_name: "{{ cluster_name }}"
+
+    - name: Get cluster join information
+      delegate_to: localhost
+      run_once: true # noqa: run-once[task]
+      register: proxmox_cluster_join
+      # The cluster is not ready immediately after creation and joining
+      until: >-
+        proxmox_cluster_join is success
+        and
+        proxmox_cluster_join.cluster_join.nodelist
+        | selectattr('name', '==', master_node)
+      retries: 5
+      delay: 10
+      community.proxmox.proxmox_cluster_join_info:
+        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+
+    - name: Set cluster information
+      delegate_to: localhost
+      run_once: true # noqa: run-once[task]
+      ansible.builtin.set_fact:
+        cluster: >-
+          {{
+            proxmox_cluster_join.cluster_join.nodelist
+            | selectattr('name', '==', master_node)
+            | first
+          }}
+
+    - name: Join cluster
+      delegate_to: localhost
+      when: inventory_hostname != master_node
+      community.proxmox.proxmox_cluster:
+        state: present
+        api_host: "{{ ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        cluster_name: "{{ cluster_name }}"
+        master_ip: "{{ cluster.pve_addr }}"
+        fingerprint: "{{ cluster.pve_fp }}"
+
+    - name: Get node info
+      delegate_to: localhost
+      register: proxmox_node
+      # The node is not ready immediately after joining
+      until: >-
+        proxmox_node is success
+        and
+        proxmox_node.proxmox_nodes
+        | selectattr('node', '==', inventory_hostname)
+        | selectattr('status', '==', 'online')
+      retries: 5
+      delay: 10
+      community.proxmox.proxmox_node_info:
+        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"

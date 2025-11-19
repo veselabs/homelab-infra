@@ -75,6 +75,10 @@
                     sshpass
                     terraform-docs
                     ;
+                  inherit
+                    (pkgs.python3Packages)
+                    proxmoxer
+                    ;
                 };
 
               git-hooks.hooks = {
