@@ -1,7 +1,6 @@
 ---
 - name: Configure Tailscale
   hosts: pve
-  become: true
   tasks:
     - name: Enable IP forwarding
       block:
