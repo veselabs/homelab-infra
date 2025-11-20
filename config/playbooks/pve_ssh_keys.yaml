@@ -1,6 +1,7 @@
 ---
 - name: Configure SSH keys
   hosts: pve
+
   tasks:
     - name: Add authorized key
       ansible.posix.authorized_key:

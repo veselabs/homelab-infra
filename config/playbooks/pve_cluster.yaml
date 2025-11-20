@@ -2,6 +2,7 @@
   hosts: pve
   # Joining the cluster at once bricks it
   serial: 1
+
   tasks:
     - name: Create cluster
       delegate_to: localhost

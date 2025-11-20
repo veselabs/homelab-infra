@@ -2,6 +2,7 @@
 # https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install
 - name: PVE Post Install script
   hosts: pve
+
   tasks:
     - name: Download script
       ansible.builtin.get_url:
