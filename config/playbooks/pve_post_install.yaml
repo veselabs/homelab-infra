@@ -1,0 +1,35 @@
+---
+# https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install
+- name: PVE Post Install script
+  hosts: pve
+  tasks:
+    - name: Download script
+      ansible.builtin.get_url:
+        # Release: 2025-11-19
+        url: https://raw.githubusercontent.com/community-scripts/ProxmoxVE/e849fd0ffeb3401218f37c035f4860f5391d8c7d/tools/pve/post-pve-install.sh
+        dest: /tmp/post-pve-install.sh
+        mode: "0744"
+
+    # Required by `ansible.builtin.expect` module
+    - name: Install pexpect
+      ansible.builtin.package:
+        state: present
+        name: python3-pexpect
+
+    - name: Run script
+      ansible.builtin.expect:
+        command: /tmp/post-pve-install.sh
+        timeout: 10
+        responses:
+          'Start the Proxmox VE Post Install Script \(y/n\)\?': "y"
+          "Deb822 sources detected": "\r"
+          "PVE-ENTERPRISE": "\x1b[B\r"
+          "CEPH-ENTERPRISE": "\x1b[B\r"
+          "PVE-NO-SUBSCRIPTION": "\r"
+          "SUBSCRIPTION NAG": "\r"
+          "Support Subscriptions": "\r"
+          'Enable high availability\?': "\r"
+          'Disable high availability\?': "\x1b[B\r"
+          "UPDATE": "\x1b[B\r"
+          "Post-Install Reminder": "\r"
+          "REBOOT": "\x1b[B\r"
