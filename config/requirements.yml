@@ -1,5 +1,5 @@
 # NOTE: The file extension has to be `yml` to have the proper filetype detected
-
+---
 collections:
   - name: community.proxmox
     version: 1.4.0

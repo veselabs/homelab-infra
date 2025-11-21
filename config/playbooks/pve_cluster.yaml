@@ -1,3 +1,4 @@
+---
 - name: Form cluster
   hosts: pve
   # Joining the cluster at once bricks it
