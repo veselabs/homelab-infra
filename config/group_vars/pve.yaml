@@ -9,4 +9,4 @@ tailscale_pve_service: pve
 api_user: "{{ lookup('ansible.builtin.env', 'PROXMOX_USERNAME') }}"
 api_password: "{{ lookup('ansible.builtin.env', 'PROXMOX_PASSWORD') }}"
 cluster_name: homelab
-master_node: pve01
+cluster_node: pve01

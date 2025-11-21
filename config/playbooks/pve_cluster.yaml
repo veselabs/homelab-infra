@@ -10,7 +10,7 @@
       run_once: true # noqa: run-once[task]
       community.proxmox.proxmox_cluster:
         state: present
-        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_host: "{{ hostvars[cluster_node].ansible_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
         cluster_name: "{{ cluster_name }}"
@@ -24,11 +24,11 @@
         proxmox_cluster_join is success
         and
         proxmox_cluster_join.cluster_join.nodelist
-        | selectattr('name', '==', master_node)
+        | selectattr('name', '==', cluster_node)
       retries: 5
       delay: 10
       community.proxmox.proxmox_cluster_join_info:
-        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_host: "{{ hostvars[cluster_node].ansible_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
 
@@ -39,13 +39,13 @@
         cluster: >-
           {{
             proxmox_cluster_join.cluster_join.nodelist
-            | selectattr('name', '==', master_node)
+            | selectattr('name', '==', cluster_node)
             | first
           }}
 
     - name: Join cluster
       delegate_to: localhost
-      when: inventory_hostname != master_node
+      when: inventory_hostname != cluster_node
       community.proxmox.proxmox_cluster:
         state: present
         api_host: "{{ ansible_host }}"
@@ -68,6 +68,6 @@
       retries: 5
       delay: 10
       community.proxmox.proxmox_node_info:
-        api_host: "{{ hostvars[master_node].ansible_host }}"
+        api_host: "{{ hostvars[cluster_node].ansible_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
