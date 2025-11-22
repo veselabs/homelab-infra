@@ -98,6 +98,13 @@
                 treefmt.package = self'.formatter;
                 trim-trailing-whitespace.enable = true;
               };
+
+              tasks = {
+                "ansible:install" = {
+                  exec = "ansible-galaxy install --role-file ./config/requirements.yml";
+                  before = ["devenv:git-hooks:run"];
+                };
+              };
             }
           ];
         };
