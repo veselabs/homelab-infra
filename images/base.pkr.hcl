@@ -33,7 +33,7 @@ source "proxmox-clone" "base" {
   }
 
   cloud_init              = true
-  cloud_init_storage_pool = "local-lvm"
+  cloud_init_storage_pool = "local-zfs"
 }
 
 build {

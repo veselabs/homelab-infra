@@ -10,3 +10,4 @@ api_user: "{{ lookup('ansible.builtin.env', 'PROXMOX_USERNAME') }}"
 api_password: "{{ lookup('ansible.builtin.env', 'PROXMOX_PASSWORD') }}"
 cluster_name: homelab
 cluster_node: pve01
+vm_templates_node: pve01
