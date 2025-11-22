@@ -1,0 +1,67 @@
+---
+- name: Bootstrap VM templates
+  hosts: pve
+  connection: local
+  run_once: true
+
+  tasks:
+    - name: Download Debian cloud image
+      connection: ssh
+      delegate_to: "{{ vm_templates_node }}"
+      ansible.builtin.get_url:
+        url: https://cdimage.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
+        dest: /tmp/debian-13-genericcloud-amd64.qcow2
+        mode: "0644"
+
+    - name: Copy Debian cloud image for customization
+      connection: ssh
+      delegate_to: "{{ vm_templates_node }}"
+      ansible.builtin.copy:
+        remote_src: true
+        src: /tmp/debian-13-genericcloud-amd64.qcow2
+        dest: /tmp/debian-13-genericcloud-amd64-customized.qcow2
+        mode: "0644"
+
+    - name: Install libguestfs-tools
+      connection: ssh
+      delegate_to: "{{ vm_templates_node }}"
+      ansible.builtin.apt:
+        state: present
+        name: libguestfs-tools
+
+    - name: Customize Debian cloud image
+      connection: ssh
+      delegate_to: "{{ vm_templates_node }}"
+      changed_when: true
+      ansible.builtin.command: >
+        virt-customize
+          --add /tmp/debian-13-genericcloud-amd64-customized.qcow2
+          --install qemu-guest-agent
+          --truncate /etc/machine-id
+
+    - name: Create bootstrap VM 9000
+      community.proxmox.proxmox_kvm:
+        state: present
+        api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        vmid: 9000
+        name: bootstrap
+        node: "{{ vm_templates_node }}"
+        scsihw: virtio-scsi-pci
+        net:
+          net0: "virtio,bridge=vmbr0"
+        scsi:
+          scsi0: "local-zfs:0,import-from=/tmp/debian-13-genericcloud-amd64-customized.qcow2"
+        ide:
+          ide0: local-zfs:cloudinit
+        boot: order=scsi0
+        agent: true
+
+    - name: Convert bootstrap VM 9000 to template
+      community.proxmox.proxmox_kvm:
+        state: template
+        api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        vmid: 9000

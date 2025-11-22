@@ -20,7 +20,6 @@
     - name: Run script
       ansible.builtin.expect:
         command: /tmp/post-pve-install.sh
-        timeout: 10
         responses:
           'Start the Proxmox VE Post Install Script \(y/n\)\?': "y"
           "Deb822 sources detected": "\r"

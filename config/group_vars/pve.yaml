@@ -1,3 +1,4 @@
+---
 ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBKvLCEwUG+hT5G0PFIHLPJK/rM8EiPngEkAkvLmo22
 iface: vmbr0
 tailnet_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
@@ -8,4 +9,5 @@ tailscale_pve_service: pve
 api_user: "{{ lookup('ansible.builtin.env', 'PROXMOX_USERNAME') }}"
 api_password: "{{ lookup('ansible.builtin.env', 'PROXMOX_PASSWORD') }}"
 cluster_name: homelab
-master_node: pve01
+cluster_node: pve01
+vm_templates_node: pve01

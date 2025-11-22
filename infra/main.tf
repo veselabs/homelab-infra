@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "jumphost" {
       scsi0 {
         disk {
           size    = "5G"
-          storage = "local-lvm"
+          storage = "local-zfs"
         }
       }
     }
@@ -28,7 +28,7 @@ resource "proxmox_vm_qemu" "jumphost" {
     ide {
       ide2 {
         cloudinit {
-          storage = "local-lvm"
+          storage = "local-zfs"
         }
       }
     }
