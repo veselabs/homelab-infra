@@ -1,4 +1,5 @@
 ---
+ansible_python_interpreter: /usr/bin/python3
 ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBKvLCEwUG+hT5G0PFIHLPJK/rM8EiPngEkAkvLmo22
 iface: vmbr0
 tailnet_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
