@@ -4,36 +4,41 @@
   connection: local
   run_once: true
 
+  vars:
+    debian_remote_url: https://cdimage.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
+    debian_local_path: /tmp/debian-13-genericcloud-amd64.qcow2
+    debian_customized_local_path: /tmp/debian-13-genericcloud-amd64-customized.qcow2
+
   tasks:
-    - name: Create bootstrap VM 9000
+    - name: Create bootstrap VM
       community.proxmox.proxmox_kvm:
         state: present
-        api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+        api_host: "{{ api_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
-        vmid: 9000
+        vmid: "{{ bootstrap_vmid }}"
         name: bootstrap
         node: "{{ vm_templates_node }}"
         scsihw: virtio-scsi-pci
         net:
-          net0: "virtio,bridge=vmbr0"
+          net0: "virtio,bridge={{ interface }}"
         ide:
-          ide0: local-zfs:cloudinit
+          ide0: "{{ storage }}:cloudinit"
         boot: order=scsi0
         agent: true
 
-    - name: Get bootstrap VM 9000 info
+    - name: Get bootstrap VM info
       register: bootstrap_vm_info
       community.proxmox.proxmox_vm_info:
-        api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+        api_host: "{{ api_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
-        vmid: 9000
+        vmid: "{{ bootstrap_vmid }}"
         config: current
 
-    - name: Set bootstrap VM 9000 info as fact
+    - name: Set bootstrap VM info as fact
       ansible.builtin.set_fact:
-        bootstrap_vm: "{{ bootstrap_vm_info.proxmox_vms | selectattr('vmid', '==', 9000) | first }}"
+        bootstrap_vm: "{{ bootstrap_vm_info.proxmox_vms | selectattr('vmid', '==', bootstrap_vmid) | first }}"
 
     - name: Attach Debian cloud image as disk
       when: bootstrap_vm.config.scsi0 is undefined
@@ -42,8 +47,8 @@
           connection: ssh
           delegate_to: "{{ vm_templates_node }}"
           ansible.builtin.get_url:
-            url: https://cdimage.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2
-            dest: /tmp/debian-13-genericcloud-amd64.qcow2
+            url: "{{ debian_remote_url }}"
+            dest: "{{ debian_local_path }}"
             mode: "0644"
 
         - name: Copy Debian cloud image for customization
@@ -51,8 +56,8 @@
           delegate_to: "{{ vm_templates_node }}"
           ansible.builtin.copy:
             remote_src: true
-            src: /tmp/debian-13-genericcloud-amd64.qcow2
-            dest: /tmp/debian-13-genericcloud-amd64-customized.qcow2
+            src: "{{ debian_local_path }}"
+            dest: "{{ debian_customized_local_path }}"
             mode: "0644"
 
         - name: Install libguestfs-tools
@@ -68,27 +73,27 @@
           changed_when: true
           ansible.builtin.command: >
             virt-customize
-              --add /tmp/debian-13-genericcloud-amd64-customized.qcow2
+              --add {{ debian_customized_local_path | quote }}
               --install qemu-guest-agent
               --truncate /etc/machine-id
 
-        - name: Update bootstrap VM 9000
+        - name: Update bootstrap VM
           community.proxmox.proxmox_kvm:
             state: present
-            api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+            api_host: "{{ api_host }}"
             api_user: "{{ api_user }}"
             api_password: "{{ api_password }}"
-            vmid: 9000
+            vmid: "{{ bootstrap_vmid }}"
             node: "{{ vm_templates_node }}"
             scsi:
-              scsi0: "local-zfs:0,import-from=/tmp/debian-13-genericcloud-amd64-customized.qcow2"
+              scsi0: "{{ storage }}:0,import-from={{ debian_customized_local_path }}"
             update: true
             update_unsafe: true
 
-    - name: Convert bootstrap VM 9000 to template
+    - name: Convert bootstrap VM to template
       community.proxmox.proxmox_kvm:
         state: template
-        api_host: "{{ hostvars[vm_templates_node].ansible_host }}"
+        api_host: "{{ api_host }}"
         api_user: "{{ api_user }}"
         api_password: "{{ api_password }}"
-        vmid: 9000
+        vmid: "{{ bootstrap_vmid }}"

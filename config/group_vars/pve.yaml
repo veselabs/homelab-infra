@@ -1,14 +1,17 @@
 ---
 ansible_python_interpreter: /usr/bin/python3
 ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBKvLCEwUG+hT5G0PFIHLPJK/rM8EiPngEkAkvLmo22
-iface: vmbr0
+interface: vmbr0
+storage: local-zfs
 tailnet_key: "{{ lookup('ansible.builtin.env', 'PVE_TAILNET_KEY') }}"
 tailscale_exit_node: true
 tailscale_routes: 10.42.1.0/24
 tailscale_ssh: false
 tailscale_pve_service: pve
+api_host: "{{ lookup('ansible.builtin.env', 'PROXMOX_URL') | urlsplit('hostname') }}"
 api_user: "{{ lookup('ansible.builtin.env', 'PROXMOX_USERNAME') }}"
 api_password: "{{ lookup('ansible.builtin.env', 'PROXMOX_PASSWORD') }}"
 cluster_name: homelab
 cluster_node: pve01
 vm_templates_node: pve01
+bootstrap_vmid: 9000

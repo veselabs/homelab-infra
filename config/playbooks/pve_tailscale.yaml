@@ -36,9 +36,9 @@
       community.general.interfaces_file:
         state: present
         backup: true
-        iface: "{{ iface }}"
+        iface: "{{ interface }}"
         option: post-up
-        value: ethtool -K {{ iface | quote }} rx-udp-gro-forwarding on rx-gro-list off
+        value: ethtool -K {{ interface | quote }} rx-udp-gro-forwarding on rx-gro-list off
 
     - name: Configure PVE service
       block:
