@@ -15,3 +15,4 @@ cluster_name: homelab
 cluster_node: pve01
 vm_templates_node: pve01
 bootstrap_vmid: 9000
+base_vmid: 9100

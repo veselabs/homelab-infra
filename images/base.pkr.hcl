@@ -11,13 +11,21 @@ variable "node" {
   type = string
 }
 
+variable "bootstrap_vm_id" {
+  type = number
+}
+
+variable "base_vm_id" {
+  type = number
+}
+
 source "proxmox-clone" "base" {
   node                     = var.node
-  clone_vm_id              = 9000
+  clone_vm_id              = var.bootstrap_vm_id
   insecure_skip_tls_verify = true
 
   vm_name = "base"
-  vm_id   = 9001
+  vm_id   = var.base_vm_id
 
   scsi_controller = "virtio-scsi-pci"
 
