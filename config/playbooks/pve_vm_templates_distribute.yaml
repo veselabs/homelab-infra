@@ -1,0 +1,68 @@
+---
+- name: Distribute VM templates
+  hosts: pve
+  connection: local
+
+  tasks:
+    - name: Set node base VM ID [{{ inventory_hostname }}]
+      ansible.builtin.set_fact:
+        node_base_vmid: |
+          {{
+            base_vmid
+            + groups['pve'].index(inventory_hostname)
+            * 100
+          }}
+
+    - name: Get node base VM info [{{ inventory_hostname }}]
+      register: node_base_vm_info
+      community.proxmox.proxmox_vm_info:
+        api_host: "{{ api_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        node: "{{ inventory_hostname }}"
+        vmid: "{{ node_base_vmid }}"
+
+    - name: Set has node base VM info as fact [{{ inventory_hostname }}]
+      ansible.builtin.set_fact:
+        has_node_base_vm: |
+          {{
+            node_base_vm_info.proxmox_vms
+            | selectattr('vmid', '==', node_base_vmid)
+            | length
+            == 1
+          }}
+
+    - name: Distribute base VM to node [{{ inventory_hostname }}]
+      when: not has_node_base_vm
+      block:
+        - name: Clone base VM
+          community.proxmox.proxmox_kvm:
+            state: present
+            api_host: "{{ api_host }}"
+            api_user: "{{ api_user }}"
+            api_password: "{{ api_password }}"
+            clone: true
+            node: "{{ vm_templates_node }}"
+            vmid: "{{ base_vmid }}"
+            newid: "{{ node_base_vmid }}"
+            name: base
+
+        - name: Mark cloned base VM as template
+          community.proxmox.proxmox_kvm:
+            state: template
+            api_host: "{{ api_host }}"
+            api_user: "{{ api_user }}"
+            api_password: "{{ api_password }}"
+            node: "{{ vm_templates_node }}"
+            vmid: "{{ node_base_vmid }}"
+
+        - name: Migrate cloned base VM to node [{{ inventory_hostname }}]
+          community.proxmox.proxmox_kvm:
+            state: present
+            api_host: "{{ api_host }}"
+            api_user: "{{ api_user }}"
+            api_password: "{{ api_password }}"
+            timeout: 60
+            migrate: true
+            node: "{{ inventory_hostname }}"
+            vmid: "{{ node_base_vmid }}"
