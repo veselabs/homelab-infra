@@ -7,7 +7,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.12 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | 5.13.0 |
 | <a name="requirement_onepassword"></a> [onepassword](#requirement\_onepassword) | 2.2.0 |
-| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 3.0.2-rc05 |
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.87.0 |
 | <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) | 0.24.0 |
 
 ## Providers
