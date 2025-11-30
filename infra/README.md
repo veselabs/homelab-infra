@@ -16,7 +16,6 @@
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 5.13.0 |
 | <a name="provider_onepassword"></a> [onepassword](#provider\_onepassword) | 2.2.0 |
-| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 3.0.2-rc05 |
 | <a name="provider_tailscale"></a> [tailscale](#provider\_tailscale) | 0.24.0 |
 
 ## Modules
@@ -31,7 +30,6 @@
 |------|------|
 | [cloudflare_dns_record.pve_homelab](https://registry.terraform.io/providers/cloudflare/cloudflare/5.13.0/docs/resources/dns_record) | resource |
 | [onepassword_item.pve_tailnet_key](https://registry.terraform.io/providers/1Password/onepassword/2.2.0/docs/resources/item) | resource |
-| [proxmox_vm_qemu.jumphost](https://registry.terraform.io/providers/Telmate/proxmox/3.0.2-rc05/docs/resources/vm_qemu) | resource |
 | [tailscale_tailnet_key.pve](https://registry.terraform.io/providers/tailscale/tailscale/0.24.0/docs/resources/tailnet_key) | resource |
 
 ## Inputs
