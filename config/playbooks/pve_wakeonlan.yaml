@@ -1,0 +1,27 @@
+---
+- name: Set MAC address for Wake on LAN
+  hosts: pve
+  become: true
+
+  vars:
+    next_wol_address: "{{ wol_address | lower }}"
+
+  tasks:
+    - name: Get MAC address for Wake on LAN
+      register: get_wol_address
+      changed_when: false
+      ansible.builtin.command: pvenode config get --property wakeonlan
+
+    - name: Set previous WOL address as fact
+      ansible.builtin.set_fact:
+        previous_wol_address: |-
+          {{
+            get_wol_address.stdout
+            | replace('wakeonlan: ', '')
+            | lower
+          }}
+
+    - name: Set MAC address for Wake on LAN
+      changed_when: previous_wol_address != next_wol_address
+      ansible.builtin.command: |
+        pvenode config set --wakeonlan {{ next_wol_address | quote }}
