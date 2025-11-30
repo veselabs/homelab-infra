@@ -84,9 +84,11 @@ module "pve_node" {
     }
   }
 
-  hostname           = each.key
-  ip_address         = each.value.ip_address
-  cloudflare_zone_id = var.cloudflare_zone_id
+  hostname            = each.key
+  ip_address          = each.value.ip_address
+  advertise_routes    = try(each.value.advertise_routes, ["10.42.1.0/24"])
+  advertise_exit_node = try(each.value.advertise_exit_node, true)
+  cloudflare_zone_id  = var.cloudflare_zone_id
 }
 
 resource "cloudflare_dns_record" "pve_homelab" {
