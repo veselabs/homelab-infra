@@ -40,12 +40,12 @@
                 AWS_ACCESS_KEY_ID = "op://veselabs/AWS Root Access Key/username";
                 AWS_SECRET_ACCESS_KEY = "op://veselabs/AWS Root Access Key/credential";
                 CLOUDFLARE_API_TOKEN = "op://veselabs/cloudflare api token/credential";
-                PM_API_URL = "op://veselabs/proxmox root pam/url";
-                PM_PASS = "op://veselabs/proxmox root pam/password";
-                PM_USER = "op://veselabs/proxmox root pam/username";
                 PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
                 PROXMOX_URL = "op://veselabs/proxmox root pam/url";
                 PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
+                PROXMOX_VE_ENDPOINT = "op://veselabs/proxmox root pam/url";
+                PROXMOX_VE_PASSWORD = "op://veselabs/proxmox root pam/password";
+                PROXMOX_VE_USERNAME = "op://veselabs/proxmox root pam/username";
                 PVE_TAILNET_KEY = "op://veselabs/homelab pve tailnet key/password";
                 TAILSCALE_OAUTH_CLIENT_ID = "op://veselabs/tailscale oauth credentials/username";
                 TAILSCALE_OAUTH_CLIENT_SECRET = "op://veselabs/tailscale oauth credentials/credential";
