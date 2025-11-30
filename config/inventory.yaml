@@ -2,17 +2,17 @@
 pve:
   hosts:
     pve01:
-      ansible_host: 10.42.1.11
+      ansible_host: pve01.homelab.veselabs.com
       ansible_user: root
     pve02:
-      ansible_host: 10.42.1.12
+      ansible_host: pve02.homelab.veselabs.com
       ansible_user: root
     pve03:
-      ansible_host: 10.42.1.13
+      ansible_host: pve03.homelab.veselabs.com
       ansible_user: root
     pve04:
-      ansible_host: 10.42.1.14
+      ansible_host: pve04.homelab.veselabs.com
       ansible_user: root
     pve05:
-      ansible_host: 10.42.1.15
+      ansible_host: pve05.homelab.veselabs.com
       ansible_user: root
