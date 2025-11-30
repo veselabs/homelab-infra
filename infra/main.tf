@@ -67,14 +67,26 @@ module "pve_node" {
   source = "./modules/pve-node"
 
   for_each = {
-    pve01 = {}
-    pve02 = {}
-    pve03 = {}
-    pve04 = {}
-    pve05 = {}
+    pve01 = {
+      ip_address = "10.42.1.11"
+    }
+    pve02 = {
+      ip_address = "10.42.1.12"
+    }
+    pve03 = {
+      ip_address = "10.42.1.13"
+    }
+    pve04 = {
+      ip_address = "10.42.1.14"
+    }
+    pve05 = {
+      ip_address = "10.42.1.15"
+    }
   }
 
-  hostname = each.key
+  hostname           = each.key
+  ip_address         = each.value.ip_address
+  cloudflare_zone_id = var.cloudflare_zone_id
 }
 
 resource "cloudflare_dns_record" "pve_homelab" {
