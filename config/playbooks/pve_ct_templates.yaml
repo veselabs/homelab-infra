@@ -1,0 +1,16 @@
+---
+- name: Download CT templates
+  hosts: pve
+  connection: local
+
+  tasks:
+    - name: Download CT templates
+      loop:
+        - debian-13-standard_13.1-2_amd64.tar.zst
+      community.proxmox.proxmox_template:
+        state: present
+        api_host: "{{ api_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        node: "{{ inventory_hostname }}"
+        template: "{{ item }}"
