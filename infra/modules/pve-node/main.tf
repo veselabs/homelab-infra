@@ -4,11 +4,10 @@ data "tailscale_device" "this" {
 
 resource "tailscale_device_subnet_routes" "this" {
   device_id = data.tailscale_device.this.node_id
-  routes = [
-    "10.42.1.0/24",
-    "0.0.0.0/0",
-    "::/0",
-  ]
+  routes = flatten([
+    var.advertise_routes,
+    var.advertise_exit_node ? ["0.0.0.0/0", "::/0", ] : []
+  ])
 }
 
 resource "cloudflare_dns_record" "this" {

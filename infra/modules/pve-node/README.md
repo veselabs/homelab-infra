@@ -31,6 +31,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_advertise_exit_node"></a> [advertise\_exit\_node](#input\_advertise\_exit\_node) | n/a | `bool` | `false` | no |
+| <a name="input_advertise_routes"></a> [advertise\_routes](#input\_advertise\_routes) | n/a | `set(string)` | `[]` | no |
 | <a name="input_cloudflare_zone_id"></a> [cloudflare\_zone\_id](#input\_cloudflare\_zone\_id) | n/a | `string` | n/a | yes |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | n/a | `string` | n/a | yes |
 | <a name="input_ip_address"></a> [ip\_address](#input\_ip\_address) | n/a | `string` | n/a | yes |
