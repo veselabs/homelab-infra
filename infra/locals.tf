@@ -22,15 +22,33 @@ locals {
 
     nodes = {
       master01 = {
-        vm_id      = 101
+        vm_id      = 111
         pve_node   = "pve01"
         ip_address = "10.42.1.21/24"
       }
 
+      master02 = {
+        vm_id      = 211
+        pve_node   = "pve02"
+        ip_address = "10.42.1.22/24"
+      }
+
+      master03 = {
+        vm_id      = 311
+        pve_node   = "pve03"
+        ip_address = "10.42.1.23/24"
+      }
+
       worker01 = {
-        vm_id      = 401
+        vm_id      = 421
         pve_node   = "pve04"
-        ip_address = "10.42.1.31/24"
+        ip_address = "10.42.1.24/24"
+      }
+
+      worker02 = {
+        vm_id      = 521
+        pve_node   = "pve05"
+        ip_address = "10.42.1.25/24"
       }
     }
   }

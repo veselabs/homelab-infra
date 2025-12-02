@@ -1,10 +1,10 @@
 resource "proxmox_virtual_environment_vm" "kubernetes" {
   for_each = local.kubernetes.nodes
 
-  name = each.key
-
-  vm_id     = each.value.vm_id
+  name      = each.key
   node_name = each.value.pve_node
+  vm_id     = each.value.vm_id
+  tags      = ["kubernetes"]
 
   clone {
     vm_id = local.base_vm_id[each.value.pve_node]
