@@ -54,3 +54,11 @@ resource "cloudflare_dns_record" "kubernetes" {
   content = split("/", each.value.ip_address)[0]
   ttl     = 1
 }
+
+resource "cloudflare_dns_record" "kubernetes_api" {
+  zone_id = var.cloudflare_zone_id
+  name    = "api.kubernetes.homelab"
+  type    = "A"
+  content = local.kubernetes.api_ip_address
+  ttl     = 1
+}

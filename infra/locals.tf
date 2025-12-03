@@ -18,7 +18,8 @@ locals {
   }
 
   kubernetes = {
-    ip_gateway = "10.42.1.1"
+    ip_gateway     = "10.42.1.1"
+    api_ip_address = "10.42.1.20"
 
     nodes = {
       master01 = {
