@@ -1,0 +1,9 @@
+# This file contains ignores rule violations for ansible-lint
+config/inventories/kubernetes/group_vars/all/all.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/all/hcloud.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/all/oci.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/all/offline.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/all/openstack.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/k8s_cluster/k8s-cluster.yml jinja[spacing]
+config/inventories/kubernetes/group_vars/k8s_cluster/k8s-cluster.yml yaml[line-length]
+config/inventories/kubernetes/group_vars/k8s_cluster/k8s-net-kube-ovn.yml yaml[line-length]
