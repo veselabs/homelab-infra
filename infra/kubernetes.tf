@@ -11,18 +11,18 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
   }
 
   cpu {
-    cores = 2
+    cores = 6
   }
 
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 12288
+    floating  = 12288
   }
 
   disk {
     interface    = "scsi0"
     datastore_id = "local-zfs"
-    size         = 8
+    size         = 24
   }
 
   initialization {
