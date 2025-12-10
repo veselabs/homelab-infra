@@ -22,7 +22,7 @@
 
     - name: Set has base VM info as fact
       ansible.builtin.set_fact:
-        has_base_vm: |
+        has_base_vm: >-
           {{
             base_vm_info.proxmox_vms
             | selectattr('vmid', '==', base_vmid)
@@ -62,7 +62,7 @@
 
         - name: Set bootstrap VM info as fact
           ansible.builtin.set_fact:
-            bootstrap_vm: |
+            bootstrap_vm: >-
               {{
                 bootstrap_vm_info.proxmox_vms
                 | selectattr('vmid', '==', bootstrap_vmid)

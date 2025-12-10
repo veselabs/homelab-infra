@@ -14,7 +14,7 @@
 
     - name: Set previous WOL address as fact
       ansible.builtin.set_fact:
-        previous_wol_address: |-
+        previous_wol_address: >-
           {{
             get_wol_address.stdout
             | replace('wakeonlan: ', '')
