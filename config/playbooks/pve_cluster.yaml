@@ -1,12 +1,12 @@
 ---
 - name: Form cluster
   hosts: pve
-  # Joining the cluster at once bricks it
+  connection: local
+  # Joining the cluster at once breaks quorum
   serial: 1
 
   tasks:
     - name: Create cluster
-      delegate_to: localhost
       run_once: true # noqa: run-once[task]
       community.proxmox.proxmox_cluster:
         state: present
@@ -16,7 +16,6 @@
         cluster_name: "{{ cluster_name }}"
 
     - name: Get cluster join information
-      delegate_to: localhost
       run_once: true # noqa: run-once[task]
       register: proxmox_cluster_join
       # The cluster is not ready immediately after creation and joining
@@ -33,7 +32,6 @@
         api_password: "{{ api_password }}"
 
     - name: Set cluster information
-      delegate_to: localhost
       run_once: true # noqa: run-once[task]
       ansible.builtin.set_fact:
         cluster: >-
@@ -44,8 +42,6 @@
           }}
 
     - name: Join cluster
-      delegate_to: localhost
-      when: inventory_hostname != cluster_node
       community.proxmox.proxmox_cluster:
         state: present
         api_host: "{{ ansible_host }}"
@@ -56,7 +52,6 @@
         fingerprint: "{{ cluster.pve_fp }}"
 
     - name: Get node info
-      delegate_to: localhost
       register: proxmox_node
       # The node is not ready immediately after joining
       until: >-
