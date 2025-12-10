@@ -14,7 +14,7 @@
 
     - name: Set previous WOL address as fact
       ansible.builtin.set_fact:
-        previous_wol_address: |-
+        previous_wol_address: >-
           {{
             get_wol_address.stdout
             | replace('wakeonlan: ', '')
@@ -23,5 +23,4 @@
 
     - name: Set MAC address for Wake on LAN
       changed_when: previous_wol_address != next_wol_address
-      ansible.builtin.command: |
-        pvenode config set --wakeonlan {{ next_wol_address | quote }}
+      ansible.builtin.command: pvenode config set --wakeonlan {{ next_wol_address | quote }}

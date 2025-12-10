@@ -6,7 +6,7 @@
   tasks:
     - name: Set node base VM ID [{{ inventory_hostname }}]
       ansible.builtin.set_fact:
-        node_base_vmid: |
+        node_base_vmid: >-
           {{
             base_vmid
             + groups['pve'].index(inventory_hostname)
@@ -24,7 +24,7 @@
 
     - name: Set has node base VM info as fact [{{ inventory_hostname }}]
       ansible.builtin.set_fact:
-        has_node_base_vm: |
+        has_node_base_vm: >-
           {{
             node_base_vm_info.proxmox_vms
             | selectattr('vmid', '==', node_base_vmid)

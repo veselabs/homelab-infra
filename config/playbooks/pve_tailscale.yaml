@@ -65,7 +65,7 @@
   handlers:
     - name: Set PVE service config
       changed_when: true
-      ansible.builtin.shell: |
-        tailscale serve set-config \
-          --service svc:pve \
+      ansible.builtin.command: >-
+        tailscale serve set-config
+          --service svc:pve
           /etc/tailscale/{{ tailscale_pve_service }}.json

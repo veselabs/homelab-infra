@@ -22,7 +22,7 @@
 
     - name: Set has base VM info as fact
       ansible.builtin.set_fact:
-        has_base_vm: |
+        has_base_vm: >-
           {{
             base_vm_info.proxmox_vms
             | selectattr('vmid', '==', base_vmid)
@@ -62,7 +62,7 @@
 
         - name: Set bootstrap VM info as fact
           ansible.builtin.set_fact:
-            bootstrap_vm: |
+            bootstrap_vm: >-
               {{
                 bootstrap_vm_info.proxmox_vms
                 | selectattr('vmid', '==', bootstrap_vmid)
@@ -100,7 +100,7 @@
               connection: ssh
               delegate_to: "{{ vm_templates_node }}"
               changed_when: true
-              ansible.builtin.command: |
+              ansible.builtin.command: >-
                 virt-customize
                   --add {{ debian_customized_local_path | quote }}
                   --install qemu-guest-agent
@@ -121,7 +121,7 @@
 
         - name: Build base VM
           changed_when: true
-          ansible.builtin.command: |
+          ansible.builtin.command: >-
             packer build
               -var node={{ vm_templates_node | quote }}
               -var bootstrap_vm_id={{ bootstrap_vmid | quote }}
