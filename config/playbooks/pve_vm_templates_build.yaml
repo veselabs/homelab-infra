@@ -100,7 +100,7 @@
               connection: ssh
               delegate_to: "{{ vm_templates_node }}"
               changed_when: true
-              ansible.builtin.command: |
+              ansible.builtin.command: >-
                 virt-customize
                   --add {{ debian_customized_local_path | quote }}
                   --install qemu-guest-agent
@@ -121,7 +121,7 @@
 
         - name: Build base VM
           changed_when: true
-          ansible.builtin.command: |
+          ansible.builtin.command: >-
             packer build
               -var node={{ vm_templates_node | quote }}
               -var bootstrap_vm_id={{ bootstrap_vmid | quote }}
