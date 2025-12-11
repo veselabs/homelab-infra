@@ -1,0 +1,26 @@
+---
+# https://community-scripts.github.io/ProxmoxVE/scripts?id=nic-offloading-fix
+- name: PVE NIC Offloading fix
+  hosts: pve
+
+  tasks:
+    - name: Download script
+      ansible.builtin.get_url:
+        # Release: 2025-11-19
+        url: https://raw.githubusercontent.com/community-scripts/ProxmoxVE/e849fd0ffeb3401218f37c035f4860f5391d8c7d/tools/pve/nic-offloading-fix.sh
+        dest: /tmp/nic-offloading-fix.sh
+        mode: "0744"
+
+    # Required by `ansible.builtin.expect` module
+    - name: Install pexpect
+      ansible.builtin.package:
+        state: present
+        name: python3-pexpect
+
+    - name: Run script
+      ansible.builtin.expect:
+        command: /tmp/nic-offloading-fix.sh
+        responses:
+          "Network Interfaces": "\r"
+          "Confirmation": "\r"
+          "Success": "\r"
