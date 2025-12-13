@@ -369,3 +369,5 @@ kubeadm_patches: []
 
 # Set to true to remove the role binding to anonymous users created by kubeadm
 remove_anonymous_access: false
+
+kubeadm_init_phases_skip: ["addon/kube-proxy"]
