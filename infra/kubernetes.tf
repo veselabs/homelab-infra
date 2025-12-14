@@ -62,3 +62,11 @@ resource "cloudflare_dns_record" "kubernetes_api" {
   content = local.kubernetes.api_ip_address
   ttl     = 1
 }
+
+resource "cloudflare_dns_record" "kubernetes_gateway" {
+  zone_id = var.cloudflare_zone_id
+  name    = "*.homelab"
+  type    = "A"
+  content = local.kubernetes.gateway_ip_address
+  ttl     = 1
+}
