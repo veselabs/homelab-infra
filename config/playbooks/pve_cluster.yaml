@@ -7,7 +7,8 @@
 
   tasks:
     - name: Create cluster
-      run_once: true # noqa: run-once[task]
+      # noqa: run-once[task]
+      run_once: true
       community.proxmox.proxmox_cluster:
         state: present
         api_host: "{{ hostvars[cluster_node].ansible_host }}"
@@ -16,7 +17,8 @@
         cluster_name: "{{ cluster_name }}"
 
     - name: Get cluster join information
-      run_once: true # noqa: run-once[task]
+      # noqa: run-once[task]
+      run_once: true
       register: proxmox_cluster_join
       # The cluster is not ready immediately after creation and joining
       until: >-
@@ -32,7 +34,8 @@
         api_password: "{{ api_password }}"
 
     - name: Set cluster information
-      run_once: true # noqa: run-once[task]
+      # noqa: run-once[task]
+      run_once: true
       ansible.builtin.set_fact:
         cluster: >-
           {{
