@@ -31,6 +31,8 @@ source "proxmox-clone" "base" {
 
   ssh_username = "root"
 
+  cpu_type = "x86-64-v2-AES"
+
   network_adapters {
     model  = "virtio"
     bridge = "vmbr0"
