@@ -1,0 +1,33 @@
+---
+- name: Set up Kubernetes for Longhorn
+  hosts: kube_control_plane:kube_node
+  become: true
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.apt:
+        state: present
+        pkg:
+          - open-iscsi
+          - parted
+
+    - name: Create partition
+      community.general.parted:
+        state: present
+        device: "{{ longhorn_device }}"
+        number: 1
+        fs_type: ext4
+
+    - name: Format partition
+      community.general.filesystem:
+        state: present
+        dev: "{{ longhorn_device }}"
+        fstype: ext4
+
+    - name: Mount partition
+      ansible.posix.mount:
+        state: mounted
+        backup: true
+        src: "{{ longhorn_device }}"
+        path: /var/lib/longhorn
+        fstype: ext4
