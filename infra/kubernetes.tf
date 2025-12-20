@@ -26,6 +26,12 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
     size         = 24
   }
 
+  disk {
+    interface    = "scsi1"
+    datastore_id = "local-zfs"
+    size         = 128
+  }
+
   initialization {
     datastore_id = "local-zfs"
 

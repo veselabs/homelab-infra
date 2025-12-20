@@ -139,3 +139,5 @@ unsafe_show_logs: false
 
 ## If enabled it will allow kubespray to attempt setup even if the distribution is not supported. For unsupported distributions this can lead to unexpected failures in some cases.
 allow_unsupported_distribution_setup: false
+
+longhorn_device: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
