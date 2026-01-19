@@ -49,3 +49,10 @@ resource "cloudflare_dns_record" "pve_homelab" {
   content = "pve.tail2be24.ts.net"
   ttl     = 1
 }
+
+resource "proxmox_virtual_environment_metrics_server" "opentelemetry_server" {
+  type   = "opentelemetry"
+  name   = "alloy"
+  server = "alloy-otlp.homelab.veselabs.com"
+  port   = 443
+}
