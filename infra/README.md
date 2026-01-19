@@ -7,7 +7,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.12 |
 | <a name="requirement_cloudflare"></a> [cloudflare](#requirement\_cloudflare) | 5.13.0 |
 | <a name="requirement_onepassword"></a> [onepassword](#requirement\_onepassword) | 2.2.0 |
-| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.87.0 |
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | 0.93.0 |
 | <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) | 0.24.0 |
 
 ## Providers
@@ -16,7 +16,7 @@
 |------|---------|
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 5.13.0 |
 | <a name="provider_onepassword"></a> [onepassword](#provider\_onepassword) | 2.2.0 |
-| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.87.0 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.93.0 |
 | <a name="provider_tailscale"></a> [tailscale](#provider\_tailscale) | 0.24.0 |
 
 ## Modules
@@ -34,7 +34,8 @@
 | [cloudflare_dns_record.kubernetes_gateway](https://registry.terraform.io/providers/cloudflare/cloudflare/5.13.0/docs/resources/dns_record) | resource |
 | [cloudflare_dns_record.pve_homelab](https://registry.terraform.io/providers/cloudflare/cloudflare/5.13.0/docs/resources/dns_record) | resource |
 | [onepassword_item.pve_tailnet_key](https://registry.terraform.io/providers/1Password/onepassword/2.2.0/docs/resources/item) | resource |
-| [proxmox_virtual_environment_vm.kubernetes](https://registry.terraform.io/providers/bpg/proxmox/0.87.0/docs/resources/virtual_environment_vm) | resource |
+| [proxmox_virtual_environment_metrics_server.opentelemetry_server](https://registry.terraform.io/providers/bpg/proxmox/0.93.0/docs/resources/virtual_environment_metrics_server) | resource |
+| [proxmox_virtual_environment_vm.kubernetes](https://registry.terraform.io/providers/bpg/proxmox/0.93.0/docs/resources/virtual_environment_vm) | resource |
 | [tailscale_tailnet_key.pve](https://registry.terraform.io/providers/tailscale/tailscale/0.24.0/docs/resources/tailnet_key) | resource |
 
 ## Inputs
