@@ -1,0 +1,31 @@
+---
+- name: Install Alloy
+  hosts: pve
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Install Alloy
+      ansible.builtin.include_role:
+        name: grafana.grafana.alloy
+      vars:
+        alloy_config: |
+          otelcol.exporter.otlp "default" {
+            client {
+              endpoint = "alloy-otlp.homelab.veselabs.com:443"
+            }
+          }
+
+          otelcol.receiver.prometheus "default" {
+            output {
+              metrics = [otelcol.exporter.otlp.default.input]
+            }
+          }
+
+          prometheus.exporter.unix "default" {
+          }
+
+          prometheus.scrape "unix" {
+            targets    = prometheus.exporter.unix.default.targets
+            forward_to = [otelcol.receiver.prometheus.default.receiver]
+          }
