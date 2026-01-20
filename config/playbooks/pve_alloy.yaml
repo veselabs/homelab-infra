@@ -22,10 +22,40 @@
             }
           }
 
+          otelcol.receiver.loki "default" {
+            output {
+              logs = [otelcol.exporter.otlp.default.input]
+            }
+          }
+
           prometheus.exporter.unix "default" {
           }
 
           prometheus.scrape "unix" {
             targets    = prometheus.exporter.unix.default.targets
             forward_to = [otelcol.receiver.prometheus.default.receiver]
+          }
+
+          loki.relabel "journal" {
+            forward_to = []
+
+            rule {
+              source_labels = ["__journal__hostname"]
+              target_label  = "node"
+            }
+
+            rule {
+              source_labels = ["__journal__systemd_unit"]
+              target_label  = "unit"
+            }
+
+            rule {
+              source_labels = ["__journal_priority_keyword"]
+              target_label  = "priority"
+            }
+          }
+
+          loki.source.journal "default" {
+            relabel_rules = loki.relabel.journal.rules
+            forward_to    = [otelcol.receiver.loki.default.receiver]
           }
