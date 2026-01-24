@@ -50,7 +50,7 @@
             }
 
             rule {
-              source_labels = ["__journal_priority_keyword"]
+              source_labels = ["__journal_priority"]
               target_label  = "priority"
             }
           }
