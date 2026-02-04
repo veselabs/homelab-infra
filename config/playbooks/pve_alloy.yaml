@@ -49,6 +49,11 @@
             forward_to = []
 
             rule {
+              target_label = "job"
+              replacement  = "bare_metal/journal"
+            }
+
+            rule {
               source_labels = ["__journal__hostname"]
               target_label  = "node"
             }
