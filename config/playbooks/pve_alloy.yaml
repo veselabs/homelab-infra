@@ -33,7 +33,16 @@
 
           prometheus.scrape "unix" {
             targets    = prometheus.exporter.unix.default.targets
+            forward_to = [prometheus.relabel.unix.receiver]
+          }
+
+          prometheus.relabel "unix" {
             forward_to = [otelcol.receiver.prometheus.default.receiver]
+
+            rule {
+              target_label = "job"
+              replacement  = "bare_metal/unix"
+            }
           }
 
           loki.relabel "journal" {
