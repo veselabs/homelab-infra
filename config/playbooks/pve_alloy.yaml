@@ -4,6 +4,11 @@
   gather_facts: true
   become: true
 
+  roles:
+    - role: prometheus.prometheus.smartctl_exporter
+      vars:
+        smartctl_exporter_system_group: root
+
   tasks:
     - name: Install Alloy
       ansible.builtin.include_role:
@@ -42,6 +47,26 @@
             rule {
               target_label = "job"
               replacement  = "bare_metal/unix"
+            }
+          }
+
+          prometheus.scrape "smart" {
+            targets    = [{"__address__" = "localhost:9633", "instance" = coalesce(sys.env("HOSTNAME"), constants.hostname)}]
+            forward_to = [prometheus.relabel.smart.receiver]
+          }
+
+          prometheus.relabel "smart" {
+            forward_to = [otelcol.receiver.prometheus.default.receiver]
+
+            rule {
+              target_label = "job"
+              replacement  = "bare_metal/smart"
+            }
+
+            rule {
+              source_labels = ["__name__"]
+              regex         = "(^(go|process)_.+$)"
+              action        = "drop"
             }
           }
 
