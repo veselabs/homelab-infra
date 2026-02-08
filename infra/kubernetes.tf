@@ -70,7 +70,15 @@ resource "cloudflare_dns_record" "kubernetes_api" {
   ttl     = 1
 }
 
-resource "cloudflare_dns_record" "kubernetes_gateway" {
+resource "cloudflare_dns_record" "kubernetes_gateway_apex" {
+  zone_id = var.cloudflare_zone_id
+  name    = "homelab"
+  type    = "A"
+  content = local.kubernetes.gateway_ip_address
+  ttl     = 1
+}
+
+resource "cloudflare_dns_record" "kubernetes_gateway_wildcard" {
   zone_id = var.cloudflare_zone_id
   name    = "*.homelab"
   type    = "A"
