@@ -233,9 +233,9 @@ loadbalancer_apiserver:
   port: 6443
 kube_vip_interface: eth0
 kube_vip_lb_fwdmethod: masquerade
-kube_vip_leaseduration: 15
-kube_vip_renewdeadline: 10
-kube_vip_retryperiod: 2
+kube_vip_leaseduration: 30
+kube_vip_renewdeadline: 20
+kube_vip_retryperiod: 4
 # kube_vip_services_enabled: false
 # kube_vip_dns_mode: first
 # kube_vip_cp_detect: false
