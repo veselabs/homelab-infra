@@ -30,6 +30,10 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
     interface    = "scsi1"
     datastore_id = "local-zfs"
     size         = 128
+
+    speed {
+      write = 50
+    }
   }
 
   initialization {
