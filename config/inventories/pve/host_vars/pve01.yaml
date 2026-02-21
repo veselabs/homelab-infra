@@ -2,3 +2,4 @@
 wol_address: E4:B9:7A:F1:98:41
 smartctl_exporter_devices:
   - /dev/disk/by-id/nvme-SSDPEMKF256G8_NVMe_INTEL_256GB_PHHP9252008S256B
+  - /dev/disk/by-id/ata-ST4000VN006-3CW104_WW69AFA6;sat
