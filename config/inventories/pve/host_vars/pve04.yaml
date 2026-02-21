@@ -1,2 +1,4 @@
 ---
 wol_address: E4:B9:7A:F1:9F:79
+smartctl_exporter_devices:
+  - /dev/disk/by-id/nvme-SSDPEMKF256G8_NVMe_INTEL_256GB_PHHP925109EQ256B
