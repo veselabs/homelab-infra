@@ -141,4 +141,3 @@ unsafe_show_logs: false
 allow_unsupported_distribution_setup: false
 
 longhorn_device: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
-kube_vip_version: 1.0.4
