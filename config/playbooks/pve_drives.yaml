@@ -1,0 +1,23 @@
+---
+- name: Set up drives
+  hosts: pve
+  become: true
+
+  tasks:
+    - name: Gather facts about ZFS pool "slow"
+      when: hdd_device is defined
+      register: slow_zpool_facts_result
+      failed_when: slow_zpool_facts_result.rc | default(0) != 0
+      community.general.zpool_facts:
+        pool: slow
+
+    - name: Create pool "slow" on HDD
+      when:
+        - hdd_device is defined
+        - slow_zpool_facts_result.msg | default('') == 'ZFS pool slow does not exist!'
+      community.general.zpool:
+        state: present
+        name: slow
+        vdevs:
+          - disks:
+              - "{{ hdd_device }}"
