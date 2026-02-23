@@ -21,3 +21,9 @@
         vdevs:
           - disks:
               - "{{ hdd_device }}"
+
+    - name: Create filesystem "slow/data" in "slow" pool
+      when: hdd_device is defined
+      community.general.zfs:
+        state: present
+        name: slow/data
