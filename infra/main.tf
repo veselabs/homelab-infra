@@ -56,3 +56,11 @@ resource "proxmox_virtual_environment_metrics_server" "opentelemetry_server" {
   server = "alloy-otlp.homelab.veselabs.com"
   port   = 443
 }
+
+resource "proxmox_virtual_environment_storage_zfspool" "slow" {
+  id             = "slow-zfs"
+  zfs_pool       = "slow/data"
+  content        = ["images", "rootdir"]
+  thin_provision = true
+  blocksize      = "16k"
+}
