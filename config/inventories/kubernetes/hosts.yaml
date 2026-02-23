@@ -4,15 +4,12 @@ kube_control_plane:
     master01:
       ansible_host: master01.kubernetes.homelab.veselabs.com
       ansible_user: debian
-      etcd_member_name: etcd01
     master02:
       ansible_host: master02.kubernetes.homelab.veselabs.com
       ansible_user: debian
-      etcd_member_name: etcd02
     master03:
       ansible_host: master03.kubernetes.homelab.veselabs.com
       ansible_user: debian
-      etcd_member_name: etcd03
 
 etcd:
   children:
