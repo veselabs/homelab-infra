@@ -27,6 +27,7 @@ locals {
         vm_id      = 111
         pve_node   = "pve01"
         ip_address = "10.42.1.21/24"
+        has_hdd    = true
       }
 
       master02 = {

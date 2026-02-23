@@ -36,6 +36,15 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
     }
   }
 
+  dynamic "disk" {
+    for_each = try(each.value.has_hdd, false) ? [1] : []
+    content {
+      interface    = "scsi2"
+      datastore_id = "slow-zfs"
+      size         = 1024
+    }
+  }
+
   initialization {
     datastore_id = "local-zfs"
 
