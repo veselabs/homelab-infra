@@ -8,6 +8,7 @@
     - role: prometheus.prometheus.smartctl_exporter
       vars:
         smartctl_exporter_system_group: root
+        smartctl_exporter_smartctl_devices: "{{ smartctl_exporter_devices }}"
 
   tasks:
     - name: Install Alloy
