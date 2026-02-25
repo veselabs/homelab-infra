@@ -59,6 +59,7 @@ resource "proxmox_virtual_environment_metrics_server" "opentelemetry_server" {
 
 resource "proxmox_virtual_environment_storage_zfspool" "slow" {
   id             = "slow-zfs"
+  nodes          = ["pve01"]
   zfs_pool       = "slow/data"
   content        = ["images", "rootdir"]
   thin_provision = true
