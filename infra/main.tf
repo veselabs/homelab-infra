@@ -14,6 +14,14 @@ resource "onepassword_item" "pve_tailnet_key" {
   password = tailscale_tailnet_key.pve.key
 }
 
+resource "onepassword_item" "grafana_admin_user" {
+  vault    = var.op_vault
+  title    = "Homelab Grafana Admin User"
+  category = "login"
+  username = "admin"
+  password_recipe {}
+}
+
 module "pve_node" {
   source = "./modules/pve-node"
 
