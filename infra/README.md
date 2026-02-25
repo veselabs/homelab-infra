@@ -36,6 +36,7 @@
 | [cloudflare_dns_record.pve_homelab](https://registry.terraform.io/providers/cloudflare/cloudflare/5.13.0/docs/resources/dns_record) | resource |
 | [onepassword_item.pve_tailnet_key](https://registry.terraform.io/providers/1Password/onepassword/2.2.0/docs/resources/item) | resource |
 | [proxmox_virtual_environment_metrics_server.opentelemetry_server](https://registry.terraform.io/providers/bpg/proxmox/0.93.0/docs/resources/virtual_environment_metrics_server) | resource |
+| [proxmox_virtual_environment_storage_zfspool.slow](https://registry.terraform.io/providers/bpg/proxmox/0.93.0/docs/resources/virtual_environment_storage_zfspool) | resource |
 | [proxmox_virtual_environment_vm.kubernetes](https://registry.terraform.io/providers/bpg/proxmox/0.93.0/docs/resources/virtual_environment_vm) | resource |
 | [tailscale_tailnet_key.pve](https://registry.terraform.io/providers/tailscale/tailscale/0.24.0/docs/resources/tailnet_key) | resource |
 
