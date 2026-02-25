@@ -11,22 +11,6 @@
           - open-iscsi
           - parted
 
-    - name: Set up default Longhorn disk
-      block:
-        - name: Create filesystem
-          community.general.filesystem:
-            state: present
-            dev: "{{ longhorn_device }}"
-            fstype: ext4
-
-        - name: Mount disk
-          ansible.posix.mount:
-            state: mounted
-            backup: true
-            src: "{{ longhorn_device }}"
-            path: /var/lib/longhorn
-            fstype: ext4
-
     - name: Set up slow Longhorn disk
       when: longhorn_slow_device is defined
       block:
