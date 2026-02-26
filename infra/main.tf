@@ -59,10 +59,11 @@ resource "cloudflare_dns_record" "pve_homelab" {
 }
 
 resource "proxmox_virtual_environment_metrics_server" "opentelemetry_server" {
-  type   = "opentelemetry"
-  name   = "alloy"
-  server = "alloy-otlp.homelab.veselabs.com"
-  port   = 443
+  type               = "opentelemetry"
+  name               = "opentelemetry"
+  server             = "telemetry.homelab.veselabs.com"
+  port               = 443
+  opentelemetry_path = "/otlp/v1/metrics"
 }
 
 resource "proxmox_virtual_environment_storage_zfspool" "slow" {
