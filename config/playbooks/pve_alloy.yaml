@@ -20,7 +20,7 @@
         alloy_config: |
           otelcol.exporter.otlp "default" {
             client {
-              endpoint = "alloy-otlp.homelab.veselabs.com:443"
+              endpoint = "telemetry.homelab.veselabs.com:443"
             }
           }
 
