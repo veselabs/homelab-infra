@@ -37,9 +37,10 @@
           modules = [
             {
               env = {
-                AWS_ACCESS_KEY_ID = "op://veselabs/AWS Root Access Key/username";
-                AWS_SECRET_ACCESS_KEY = "op://veselabs/AWS Root Access Key/credential";
+                CLOUDFLARE_ACCESS_KEY_ID = "op://veselabs/cloudflare api token/access_key_id";
+                CLOUDFLARE_ACCOUNT_ID = "op://veselabs/cloudflare api token/account_id";
                 CLOUDFLARE_API_TOKEN = "op://veselabs/cloudflare api token/credential";
+                CLOUDFLARE_SECRET_ACCESS_KEY = "op://veselabs/cloudflare api token/secret_access_key";
                 PROXMOX_PASSWORD = "op://veselabs/proxmox root pam/password";
                 PROXMOX_URL = "op://veselabs/proxmox root pam/url";
                 PROXMOX_USERNAME = "op://veselabs/proxmox root pam/username";
@@ -69,7 +70,7 @@
                 ++ builtins.attrValues {
                   inherit
                     (pkgs)
-                    awscli2
+                    envsubst
                     just
                     packer
                     sshpass
