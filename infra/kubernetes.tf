@@ -16,8 +16,8 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
   }
 
   memory {
-    dedicated = 15360
-    floating  = 15360
+    dedicated = 14336
+    floating  = 14336
   }
 
   disk {
