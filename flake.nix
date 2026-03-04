@@ -74,6 +74,7 @@
                     envsubst
                     just
                     packer
+                    pre-commit
                     sshpass
                     terraform-docs
                     ;
