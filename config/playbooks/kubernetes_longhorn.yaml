@@ -8,6 +8,7 @@
       ansible.builtin.apt:
         state: present
         pkg:
+          - nfs-common
           - open-iscsi
           - parted
 
