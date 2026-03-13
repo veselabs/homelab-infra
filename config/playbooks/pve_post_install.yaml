@@ -6,8 +6,8 @@
   tasks:
     - name: Download script
       ansible.builtin.get_url:
-        # Release: 2025-11-19
-        url: https://raw.githubusercontent.com/community-scripts/ProxmoxVE/e849fd0ffeb3401218f37c035f4860f5391d8c7d/tools/pve/post-pve-install.sh
+        # Release: 2026-03-12
+        url: https://raw.githubusercontent.com/community-scripts/ProxmoxVE/070f1120e6761f29538b1c5bc7395494bb1c79f1/tools/pve/post-pve-install.sh
         dest: /tmp/post-pve-install.sh
         mode: "0744"
 
