@@ -35,12 +35,6 @@ module "pve_node" {
     pve03 = {
       ip_address = "10.42.1.13"
     }
-    pve04 = {
-      ip_address = "10.42.1.14"
-    }
-    pve05 = {
-      ip_address = "10.42.1.15"
-    }
   }
 
   hostname            = each.key

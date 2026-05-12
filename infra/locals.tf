@@ -9,8 +9,6 @@ locals {
     pve01 = 9100
     pve02 = 9200
     pve03 = 9300
-    pve04 = 9400
-    pve05 = 9500
   }
 
   dns = {
@@ -40,18 +38,6 @@ locals {
         vm_id      = 311
         pve_node   = "pve03"
         ip_address = "10.42.1.23/24"
-      }
-
-      worker01 = {
-        vm_id      = 421
-        pve_node   = "pve04"
-        ip_address = "10.42.1.24/24"
-      }
-
-      worker02 = {
-        vm_id      = 521
-        pve_node   = "pve05"
-        ip_address = "10.42.1.25/24"
       }
     }
   }
