@@ -31,7 +31,7 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
     content {
       interface    = "scsi2"
       datastore_id = "slow-zfs"
-      size         = 1024
+      size         = 2048
     }
   }
 
