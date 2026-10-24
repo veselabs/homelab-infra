@@ -23,7 +23,7 @@ resource "proxmox_virtual_environment_vm" "kubernetes" {
   disk {
     interface    = "scsi0"
     datastore_id = "local-zfs"
-    size         = 24
+    size         = 36
   }
 
   dynamic "disk" {
